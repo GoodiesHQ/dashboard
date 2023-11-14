@@ -1,12 +1,16 @@
 import yaml from 'js-yaml';
+import { building } from '$app/environment';
 import { type Cache, CacheLocal } from '$lib/cache';
 import type { Config } from '$lib/types';
 import { getIconData } from '@iconify/utils';
-import { DASHBOARD_CONFIG } from '$env/static/private';
+// import { DASHBOARD_CONFIG } from '$env/static/private';
 import { resolve } from 'path';
 import { readFile } from 'node:fs/promises';
 import type { IconifyJSON } from '@iconify/types';
 import { isUrl } from '$lib/utils';
+
+const DEFAULT_DASHBOARD_CONFIG = '/config/dashboard.yml';
+const DASHBOARD_CONFIG = process.env.DASHBOARD_CONFIG || DEFAULT_DASHBOARD_CONFIG;
 
 const DEFAULT_ICON_FAMILY = 'mdi';
 
@@ -82,7 +86,7 @@ async function loadIconFamilies(strIconFamilies: string[]) {
 			try {
 				// import the locate function for resolving JSON files if the package exists
 				const pkg = '@iconify/json';
-				const locate = (await import(pkg)).locate;
+				const locate = (await import(/* @vite-ignore */ pkg)).locate;
 
 				// parse JSON data of the icon family
 				const iconJson = JSON.parse(
@@ -93,9 +97,11 @@ async function loadIconFamilies(strIconFamilies: string[]) {
 				allIconData[strIconFamily] = iconJson;
 				console.log(`Loaded icon family '${strIconFamily}'.`);
 			} catch (e) {
-				console.log(
-					`Failed loading icon family '${strIconFamily}'. Falling back to public API: ${e}`,
-				);
+				if (!building) {
+					console.log(
+						`Failed loading icon family '${strIconFamily}'. Falling back to public API: ${e}`,
+					);
+				}
 			}
 		}),
 	);
