@@ -1,8 +1,9 @@
 # svelte-kit
 .svelte-kit
 
-# config directory
+# config and build directory
 src/config
+build
 
 # Logs
 logs
