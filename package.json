@@ -1,0 +1,47 @@
+{
+	"name": "dashboard",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"devDependencies": {
+		"@iconify-icons/mdi": "^1.2.48",
+		"@iconify/svelte": "^3.1.4",
+		"@sveltejs/adapter-auto": "^2.1.1",
+		"@sveltejs/adapter-static": "^2.0.3",
+		"@sveltejs/kit": "^1.27.5",
+		"@typescript-eslint/eslint-plugin": "^6.10.0",
+		"@typescript-eslint/parser": "^6.10.0",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.53.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-svelte": "^2.35.0",
+		"postcss": "^8.4.31",
+		"postcss-load-config": "^4.0.1",
+		"prettier": "^3.0.3",
+		"prettier-plugin-svelte": "^3.1.0",
+		"svelte": "^4.2.3",
+		"svelte-check": "^3.6.0",
+		"svelte-loading-spinners": "^0.3.4",
+		"tailwindcss": "^3.3.5",
+		"tslib": "^2.6.2",
+		"typescript": "^5.2.2",
+		"vite": "^4.5.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@iconify/json": "^2.2.141",
+		"@iconify/types": "^2.0.0",
+		"@iconify/utils": "^2.1.11",
+		"@types/js-yaml": "^4.0.9",
+		"@types/node": "^20.9.0",
+		"fs": "^0.0.1-security"
+	}
+}
