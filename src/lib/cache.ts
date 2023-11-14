@@ -1,7 +1,6 @@
-// simple, naive cache implementation
-import { DEFAULT_CACHE_TTL as DEFAULT_CACHE_TTL_STR } from '$env/static/private';
+import { DASHBOARD_CACHE_TTL as DASHBOARD_CACHE_TTL_STR } from '$env/static/private';
 
-const DEFAULT_CACHE_TTL = parseInt(DEFAULT_CACHE_TTL_STR);
+const DASHBOARD_CACHE_TTL = parseInt(DASHBOARD_CACHE_TTL_STR);
 
 export interface Cache<T> {
 	isValid(): boolean;
@@ -16,7 +15,7 @@ export class CacheLocal<T> implements Cache<T> {
 	private building: Promise<T> | null;
 	private builder: () => Promise<T>;
 
-	constructor(builder: () => Promise<T>, ttl: number = DEFAULT_CACHE_TTL) {
+	constructor(builder: () => Promise<T>, ttl: number = DASHBOARD_CACHE_TTL) {
 		this.ttl = ttl;
 		this.expires = Date.now() + ttl;
 		this.value = null;
@@ -58,7 +57,7 @@ export class CacheLocal<T> implements Cache<T> {
 			this.building = null;
 		}
 		if (this.value == null) {
-			throw new Error('Failed to buid cache.');
+			throw new Error('Failed to build cache.');
 		}
 		return this.value;
 	}

@@ -27,7 +27,7 @@
  */
 declare module '$env/static/private' {
 	export const DASHBOARD_CONFIG: string;
-	export const DEFAULT_CACHE_TTL: string;
+	export const DASHBOARD_CACHE_TTL: string;
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
 	export const ChocolateyInstall: string;
@@ -149,7 +149,7 @@ declare module '$env/static/public' {
 declare module '$env/dynamic/private' {
 	export const env: {
 		DASHBOARD_CONFIG: string;
-		DEFAULT_CACHE_TTL: string;
+		DASHBOARD_CACHE_TTL: string;
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
 		ChocolateyInstall: string;
