@@ -5,7 +5,7 @@ const DASHBOARD_CACHE_TTL = parseInt(DASHBOARD_CACHE_TTL_STR);
 export interface Cache<T> {
 	isValid(): boolean;
 	set(value: T | null): void;
-	get(): Promise<T>;
+	get(): Promise<T | null>;
 }
 
 export class CacheLocal<T> implements Cache<T> {
@@ -17,11 +17,10 @@ export class CacheLocal<T> implements Cache<T> {
 
 	constructor(builder: () => Promise<T>, ttl: number = DASHBOARD_CACHE_TTL) {
 		this.ttl = ttl;
-		this.expires = Date.now() + ttl;
+		this.expires = 0;
 		this.value = null;
 		this.building = null;
 		this.builder = builder;
-		this.build();
 	}
 
 	isValid(): boolean {
@@ -29,16 +28,21 @@ export class CacheLocal<T> implements Cache<T> {
 	}
 
 	set(value: T | null) {
-		this.expires = Date.now() + this.ttl;
+		this.expires = value == null ? 0 : Date.now() + this.ttl;
 		this.value = value;
 	}
 
-	async get(): Promise<T> {
+	async get(): Promise<T | null> {
 		if (!this.value || !this.isValid()) {
-			console.log('Cache Miss');
-			return await this.build();
+			// console.log('Cache Miss');
+			try {
+				return await this.build();
+			} catch (e) {
+				console.log(e);
+				this.set(null);
+			}
 		}
-		console.log('Cache Hit');
+		// console.log('Cache Hit');
 		return this.value;
 	}
 
@@ -49,10 +53,9 @@ export class CacheLocal<T> implements Cache<T> {
 			this.building = this.builder();
 			try {
 				const value = await this.building;
-				this.value = value;
+				this.set(value);
 			} catch (e) {
-				console.log('error in build');
-				this.value = null;
+				console.log('Error in cache build function:', e);
 			}
 			this.building = null;
 		}
