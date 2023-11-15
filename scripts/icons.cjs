@@ -16,6 +16,7 @@ if(process.env.DASHBOARD_INSTALL_ICONS == '1' || process.env.DASHBOARD_INSTALL_I
         }
         console.log(stdout);
     });
+    console.log('Installed!')
 } else {
     console.log('Not installing local icons.')
 }
